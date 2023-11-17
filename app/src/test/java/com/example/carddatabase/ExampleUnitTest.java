@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.carddatabase;
 
 import org.junit.Test;
 
