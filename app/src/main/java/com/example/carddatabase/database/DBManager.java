@@ -44,9 +44,28 @@ public class DBManager {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        cursor.moveToNext();
         System.out.println(cursor.getString(1));
         return cursor;
+    }
+
+    public Cursor search(String name, String color, String type) {
+        String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.COLOR, DatabaseHelper.TYPE };
+        String whereClause = "name ? AND color ? AND type ?";
+        Boolean includeName = (name != "");
+        Boolean includeColor = (color != "");
+        Boolean includeType = (type != "");
+        String[] whereArgs = new String[] {
+                includeName ? "= " + name: "IS NOT NULL",
+                includeColor ? "= " + color: "IS NOT NULL",
+                includeType ? "= " + type : "IS NOT NULL",
+
+        };
+        Cursor cursor = database.query(DatabaseHelper.TABLE_NAME, columns, whereClause, whereArgs, null, null, null);
+        if(cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+
     }
 
     public int update(long _id, String name, String color, String type) {

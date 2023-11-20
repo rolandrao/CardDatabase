@@ -21,7 +21,7 @@ import com.example.carddatabase.database.ModifyCountryActivity;
 import com.example.carddatabase.databinding.FragmentDashboardBinding;
 import com.example.carddatabase.R;
 
-public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private FragmentDashboardBinding binding;
     private DBManager dbManager;
@@ -29,6 +29,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private ListView listView;
 
     private SimpleCursorAdapter adapter;
+
+    String name, color, type;
 
     final String[] from = new String[] { DatabaseHelper._ID,
             DatabaseHelper.NAME, DatabaseHelper.COLOR, DatabaseHelper.TYPE };
@@ -87,5 +89,21 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         modify_intent.putExtra("id", id);
 
         startActivity(modify_intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.searchButton) {
+            TextView nameTextView = (TextView) v.findViewById(R.id.nameSearch);
+            TextView colorTextView = (TextView) v.findViewById(R.id.colorSearch);
+            TextView typeTextView = (TextView) v.findViewById(R.id.typeSearch);
+
+            name = nameTextView.getText().toString();
+            color = colorTextView.getText().toString();
+            type = colorTextView.getText().toString();
+
+            Cursor cursor = dbManager.search(name, color, type);
+
+        }
     }
 }
