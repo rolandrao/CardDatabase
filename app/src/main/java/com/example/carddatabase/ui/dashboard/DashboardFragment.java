@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,7 +30,12 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 
     private ListView listView;
 
+    private Button searchButton;
+
     private SimpleCursorAdapter adapter;
+    private Cursor cursor;
+
+    private EditText nameEditView, colorEditView, typeEditView;
 
     String name, color, type;
 
@@ -50,7 +57,14 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 
         dbManager = new DBManager(getActivity());
         dbManager.open();
-        Cursor cursor = dbManager.fetch();
+        cursor = dbManager.fetch();
+
+        searchButton = (Button) root.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(this);
+
+        nameEditView = (EditText) root.findViewById(R.id.nameSearch);
+        colorEditView = (EditText) root.findViewById(R.id.colorSearch);
+        typeEditView = (EditText) root.findViewById(R.id.typeSearch);
 
         listView = (ListView) root.findViewById(R.id.listView);
         listView.setEmptyView(root.findViewById(R.id.empty));
@@ -93,16 +107,26 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onClick(View v) {
+        System.out.println("Clicked");
         if (v.getId() == R.id.searchButton) {
-            TextView nameTextView = (TextView) v.findViewById(R.id.nameSearch);
-            TextView colorTextView = (TextView) v.findViewById(R.id.colorSearch);
-            TextView typeTextView = (TextView) v.findViewById(R.id.typeSearch);
+            System.out.println("Clicked searchButton");
 
-            name = nameTextView.getText().toString();
-            color = colorTextView.getText().toString();
-            type = colorTextView.getText().toString();
+            System.out.println("FLAG0");
 
-            Cursor cursor = dbManager.search(name, color, type);
+            name = nameEditView.getText().toString();
+            System.out.println("FLAG1");
+            color = colorEditView.getText().toString();
+            System.out.println("FLAG2");
+            type = typeEditView.getText().toString();
+            System.out.println("FLAG3");
+
+
+            cursor = dbManager.search(name, color, type);
+            System.out.println("Created Cursor");
+//            adapter = new SimpleCursorAdapter(getActivity(), R.layout.activity_view_record, cursor, from, to, 0);
+            adapter.changeCursor(cursor);
+            adapter.notifyDataSetChanged();
+            System.out.println("Updated ListView");
 
         }
     }

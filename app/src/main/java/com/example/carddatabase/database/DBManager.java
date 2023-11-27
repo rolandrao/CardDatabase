@@ -44,26 +44,42 @@ public class DBManager {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        System.out.println(cursor.getString(1));
         return cursor;
     }
 
     public Cursor search(String name, String color, String type) {
+        System.out.println("Start of search");
         String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.COLOR, DatabaseHelper.TYPE };
-        String whereClause = "name ? AND color ? AND type ?";
-        Boolean includeName = (name != "");
-        Boolean includeColor = (color != "");
-        Boolean includeType = (type != "");
-        String[] whereArgs = new String[] {
-                includeName ? "= " + name: "IS NOT NULL",
-                includeColor ? "= " + color: "IS NOT NULL",
-                includeType ? "= " + type : "IS NOT NULL",
+//        String whereClause = "name ? AND color ? AND type ?";
+        String whereClause = "name ";
+        if (name != "") {
+            whereClause += "= \"";
+            whereClause += name + "\"";
+        }else {
+            whereClause += " IS NOT NULL";
+        }
+        whereClause += " AND color ";
+        if (color != "") {
+            whereClause += "= \"";
+            whereClause += color + "\"";
+        }else {
+            whereClause += " IS NOT NULL";
+        }
+        whereClause += " AND type ";
+        if (type != "") {
+            whereClause += "= \"";
+            whereClause += type + "\"";
+        }else {
+            whereClause += " IS NOT NULL";
+        }
 
-        };
-        Cursor cursor = database.query(DatabaseHelper.TABLE_NAME, columns, whereClause, whereArgs, null, null, null);
+        System.out.println(whereClause);
+
+        Cursor cursor = database.query(DatabaseHelper.TABLE_NAME, columns, whereClause, null, null, null, null);
         if(cursor != null) {
             cursor.moveToFirst();
         }
+        System.out.println("End of search");
         return cursor;
 
     }
