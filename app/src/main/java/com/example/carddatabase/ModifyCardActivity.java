@@ -1,18 +1,16 @@
-package com.example.carddatabase.database;
+package com.example.carddatabase;
 
-/**
- * Created by anupamchugh on 19/10/15.
- */
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import com.example.carddatabase.R;
 
-public class ModifyCountryActivity extends Activity implements OnClickListener {
+import com.example.carddatabase.database.DBManager;
+
+public class ModifyCardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText nameText, colorText, typeText;
     private Button updateBtn, deleteBtn;
@@ -73,7 +71,7 @@ public class ModifyCountryActivity extends Activity implements OnClickListener {
     }
 
     public void returnHome() {
-        Intent home_intent = new Intent(getApplicationContext(), CardListActivity.class)
+        Intent home_intent = new Intent(getApplicationContext(), MainActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(home_intent);
     }

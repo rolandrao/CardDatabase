@@ -52,25 +52,31 @@ public class DBManager {
         String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.COLOR, DatabaseHelper.TYPE };
 //        String whereClause = "name ? AND color ? AND type ?";
         String whereClause = "name ";
-        if (name != "") {
+        System.out.println("Name: -" + name + "-");
+        System.out.println(name == "");
+        System.out.println("Color: -" + color + "-");
+        System.out.println(color.length());
+        System.out.println("Type: -" + type + "-");
+        System.out.println(type.length());
+        if (name.length() > 0) {
             whereClause += "= \"";
             whereClause += name + "\"";
         }else {
             whereClause += " IS NOT NULL";
         }
         whereClause += " AND color ";
-        if (color != "") {
+        if (color.length() > 0) {
             whereClause += "= \"";
             whereClause += color + "\"";
         }else {
-            whereClause += " IS NOT NULL";
+            whereClause += "IS NOT NULL";
         }
         whereClause += " AND type ";
-        if (type != "") {
+        if (type.length() > 0) {
             whereClause += "= \"";
             whereClause += type + "\"";
         }else {
-            whereClause += " IS NOT NULL";
+            whereClause += "IS NOT NULL";
         }
 
         System.out.println(whereClause);
