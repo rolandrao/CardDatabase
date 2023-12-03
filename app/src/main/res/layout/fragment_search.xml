@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    android:windowSoftInputMode="adjustResize"
+    tools:context=".ui.search.SearchFragment">
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameSearch"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,25 +31,20 @@
 
     <EditText
         android:id="@+id/colorSearch"
-        android:layout_width="393dp"
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="Color"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/typeSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameSearch"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintTop_toBottomOf="@+id/nameSearch" />
 
     <EditText
         android:id="@+id/typeSearch"
-        android:layout_width="393dp"
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Type"
         android:inputType="text"
@@ -60,14 +55,11 @@
 
     <EditText
         android:id="@+id/nameSearch"
-        android:layout_width="393dp"
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/colorSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
@@ -77,10 +69,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="100dp"
         android:text="Search"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeSearch" />

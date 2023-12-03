@@ -1,8 +1,18 @@
 package com.example.carddatabase;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +32,12 @@ public class ModifyCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
 
         setTitle("Modify Record");
 
@@ -55,17 +71,40 @@ public class ModifyCardActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My Notification");
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,  new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+            return;
+        }
         if (v.getId() == R.id.btn_update) {
             String name = nameText.getText().toString();
             String color = colorText.getText().toString();
             String type = typeText.getText().toString();
 
             dbManager.update(_id, name, color, type);
+
+            builder.setContentTitle("Card Updated");
+            builder.setContentText("Name: " + name + ", Color: " + color + ", Type: " + type);
+            builder.setSmallIcon(R.drawable.ic_launcher_background);
+            builder.setAutoCancel(true);
+
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+            managerCompat.notify(1, builder.build());
+
+
             this.returnHome();
 
         }
         else if (v.getId() == R.id.btn_delete) {
             dbManager.delete(_id);
+
+            builder.setContentTitle("Card Deleted");
+            builder.setContentText("A Card was recently deleted from the database");
+            builder.setSmallIcon(R.drawable.ic_launcher_background);
+
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+            managerCompat.notify(1, builder.build());
+
             this.returnHome();
         }
     }

@@ -1,4 +1,4 @@
-package com.example.carddatabase.ui.dashboard;
+package com.example.carddatabase.ui.search;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,12 +20,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.carddatabase.ModifyCardActivity;
 import com.example.carddatabase.database.DBManager;
 import com.example.carddatabase.database.DatabaseHelper;
-import com.example.carddatabase.databinding.FragmentDashboardBinding;
+import com.example.carddatabase.databinding.FragmentSearchBinding;
 import com.example.carddatabase.R;
 
-public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class SearchFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    private FragmentDashboardBinding binding;
+    private FragmentSearchBinding binding;
     private DBManager dbManager;
 
     private ListView listView;
@@ -46,10 +46,10 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        SearchViewModel searchViewModel =
+                new ViewModelProvider(this).get(SearchViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         System.out.println("Created Dashboard Fragment");
