@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,10 +24,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.View.OnClickListener;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.example.carddatabase.R;
 
 import com.example.carddatabase.database.DBManager;
+import com.example.carddatabase.database.DatabaseHelper;
 import com.example.carddatabase.databinding.FragmentAddCardBinding;
 
 public class AddCardFragment extends Fragment implements OnClickListener {
@@ -36,7 +40,14 @@ public class AddCardFragment extends Fragment implements OnClickListener {
     private EditText nameEditText;
     private EditText colorEditText;
     private EditText typeEditText;
+    private ListView databaseView;
+    private Cursor cursor;
+    private SimpleCursorAdapter adapter;
 
+    final String[] from = new String[] { DatabaseHelper._ID,
+            DatabaseHelper.NAME, DatabaseHelper.COLOR, DatabaseHelper.TYPE };
+
+    final int[] to = new int[] { R.id.id, R.id.name, R.id.color, R.id.type };
     private DBManager dbManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,6 +76,16 @@ public class AddCardFragment extends Fragment implements OnClickListener {
 
         dbManager = new DBManager(getActivity());
         dbManager.open();
+        cursor = dbManager.fetch();
+
+        databaseView = (ListView) root.findViewById(R.id.databaseView);
+        databaseView.setSmoothScrollbarEnabled(true);
+        databaseView.setEmptyView(root.findViewById(R.id.empty));
+
+        adapter = new SimpleCursorAdapter(getActivity(), R.layout.activity_view_record, cursor, from, to, 0);
+        adapter.notifyDataSetChanged();
+
+        databaseView.setAdapter(adapter);
 
         return root;
     }
@@ -87,6 +108,11 @@ public class AddCardFragment extends Fragment implements OnClickListener {
             System.out.println(type);
             System.out.println("Before insert");
             dbManager.insert(name, color, type);
+            databaseView.smoothScrollToPosition(databaseView.getCount()-1);
+            cursor = dbManager.fetch();
+            adapter.changeCursor(cursor);
+            adapter.notifyDataSetChanged();
+            System.out.println("Updated DatabaseView");
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "My Notification");
             builder.setContentTitle("New Card Added");

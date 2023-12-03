@@ -8,16 +8,23 @@
     tools:context=".ui.addcard.AddCardFragment">
 
 
+    <ListView
+        android:id="@+id/databaseView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/editName"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="160dp"
         android:ems="10"
         android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/databaseView">
 
         <requestFocus
             android:layout_width="wrap_content"
