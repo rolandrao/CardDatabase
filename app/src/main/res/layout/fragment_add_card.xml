@@ -5,6 +5,7 @@
     android:id="@+id/formLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".ui.addcard.AddCardFragment">
 
 
@@ -19,7 +20,7 @@
     <EditText
         android:id="@+id/editName"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +35,7 @@
     <EditText
         android:id="@+id/editColor"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="Color"
         android:inputType="text"
@@ -45,7 +46,7 @@
     <EditText
         android:id="@+id/editType"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="Type"
         android:inputType="text"
@@ -57,7 +58,7 @@
         android:id="@+id/add_record"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:text="Add Card"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
